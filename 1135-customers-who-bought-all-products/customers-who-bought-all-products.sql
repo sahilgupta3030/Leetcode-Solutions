@@ -2,8 +2,6 @@
 
 
 SELECT customer_id
-FROM   customer
-GROUP  BY customer_id
-HAVING Count(DISTINCT product_key) = (SELECT
-       Count(DISTINCT product_key) AS totl_prdct
-                                      FROM   product) 
+FROM Customer
+GROUP BY customer_id
+HAVING COUNT(DISTINCT product_key) = (SELECT COUNT(*) FROM Product)
