@@ -1,38 +1,43 @@
+#include <vector>
+
+using namespace std;
+
 class Solution {
 public:
     vector<int> luckyNumbers(vector<vector<int>>& matrix) {
-        vector<int> luckyNumbers;
-        
+        vector<int> foundLucky;
+
         int m = matrix.size();
         int n = matrix[0].size();
-        
-        for (int i = 0; i < m; ++i) {
-            int minInRow = matrix[i][0]; // Initialize minInRow with the first element of the row
-            int colIndex = 0; // Initialize colIndex with 0
-            
+
+        for (int i = 0; i < m; i++) {
+            int min_row = matrix[i][0];
+            int col_index = 0;
+
             // Find the minimum element in the current row
-            for (int j = 1; j < n; ++j) {
-                if (matrix[i][j] < minInRow) {
-                    minInRow = matrix[i][j];
-                    colIndex = j; // Update colIndex to the column index of the minimum element
+            for (int j = 0; j < n; j++) {
+                if (matrix[i][j] < min_row) {
+                    min_row = matrix[i][j];
+                    col_index = j;
                 }
             }
-            
-            // Check if the minimum element in the row is also the maximum in its column
+
             bool isLucky = true;
-            for (int k = 0; k < m; ++k) {
-                if (matrix[k][colIndex] > minInRow) {
+
+            // Check if the minimum element in the row is also the maximum in its column
+            for (int k = 0; k < m; k++) { // Iterate over rows, not columns
+                if (matrix[k][col_index] > min_row) {
                     isLucky = false;
                     break;
                 }
             }
-            
+
             // If the element is lucky, add it to the list
             if (isLucky) {
-                luckyNumbers.push_back(minInRow);
+                foundLucky.push_back(min_row);
             }
         }
-        
-        return luckyNumbers;
+
+        return foundLucky;
     }
 };
