@@ -29,10 +29,7 @@ public:
             fast = fast->next->next;
         }
         
-        // If the list has odd number of nodes, move slow one step ahead
-        if (fast != nullptr) {
-            slow = slow->next;
-        }
+        
 
         return prev;
     }
