@@ -10,7 +10,8 @@ public:
 
             if (nums[mid] == target)
                 return mid;
-            else if (nums[mid] < target)
+            
+            if (nums[mid] < target)
                 low = mid + 1;
             else
                 high = mid - 1;
