@@ -1,15 +1,35 @@
 class Solution {
 public:
     bool isPowerOfTwo(int n) {
-        // Base case: if n becomes 1, it means it was a power of two
+        
         if (n == 1)
-            return true;
+            return true; // Base case: n equals 1
 
-        // If n becomes less than 1 or odd, it can't be a power of two
+        
         if (n < 1 || n % 2 != 0)
-            return false;
+            return false; // n less than 1 or odd
 
-        // Recursive case: continue dividing n by 2
-        return isPowerOfTwo(n / 2);
+        // Iterative: divide n by 2 until it's not divisible
+        while (n > 1) {
+            if (n % 2 != 0)
+                return false;
+            n /= 2;
+        }
+        return true;
     }
 };
+
+// // RECURSIVE
+// class Solution {
+// public:
+//     bool isPowerOfTwo(int n) {
+//
+//         if (n == 1)
+//             return true; // Base case: n equals 1
+//
+//         if (n < 1 || n % 2 != 0)
+//             return false;  // n less than 1 or odd
+//
+//         return isPowerOfTwo(n / 2); // Recursive: divide n by 2
+//     }
+// };
