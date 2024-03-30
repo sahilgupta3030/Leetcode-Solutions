@@ -8,20 +8,21 @@ public:
         int total = 0;
         int diff = 0;
         int j = 0;
-        vector<int> cnt(20002);
+        vector<int> count(99999);
         for (int i = 0; i < n; i++) {
-            if (cnt[A[i]] == 0) {
+            if (count[A[i]] == 0) {
                 diff++;
-                cnt[A[i]]++;
+                count[A[i]]++;
             } else {
-                cnt[A[i]]++;
+                count[A[i]]++;
             }
+
             if (diff <= K) {
                 total += (i - j + 1);
             } else {
                 while (j < n && j <= i && diff > K) {
-                    cnt[A[j]]--;
-                    if (cnt[A[j]] == 0)
+                    count[A[j]]--;
+                    if (count[A[j]] == 0)
                         diff--;
                     j++;
                 }
@@ -31,6 +32,7 @@ public:
         return total;
     }
 
+    // actual answer..
     int subarraysWithKDistinct(vector<int>& A, int K) {
         return ok(A, K) - ok(A, K - 1);
     }
