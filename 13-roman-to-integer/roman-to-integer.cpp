@@ -11,14 +11,16 @@ public:
             {'M', 1000}
         };
 
-        int result = 0;
-
-        for (int i = 0; i < s.size(); i++) {
-            if (i == 0 || map[s[i]] <= map[s[i - 1]]) 
-                result += map[s[i]];
-            else
-                result += map[s[i]] - 2 * map[s[i - 1]];
+        int ans = 0;
+        
+        for(int i = 0; i < s.length(); i++){
+            if(map[s[i]] < map[s[i+1]]){
+                ans -= map[s[i]];
+            }
+            else{
+                ans += map[s[i]];
+            }
         }
-        return result;
+        return ans;
     }
 };
