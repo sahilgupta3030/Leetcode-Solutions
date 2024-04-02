@@ -1,14 +1,15 @@
 class Solution {
  public:
   bool isIsomorphic(string s, string t) {
-    vector<int> charToIndex_s(128);
-    vector<int> charToIndex_t(128);
+    vector<int> sIndexMap(128, 0); 
+    vector<int> tIndexMap(128, 0); 
 
     for (int i = 0; i < s.length(); ++i) {
-      if (charToIndex_s[s[i]] != charToIndex_t[t[i]])
+      if (sIndexMap[s[i]] != tIndexMap[t[i]])
         return false;
-      charToIndex_s[s[i]] = i + 1;
-      charToIndex_t[t[i]] = i + 1;
+        
+      sIndexMap[s[i]] = i + 1;
+      tIndexMap[t[i]] = i + 1;
     }
 
     return true;
