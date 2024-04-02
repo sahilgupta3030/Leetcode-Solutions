@@ -14,6 +14,8 @@ public:
         int ans = 0;
         
         for(int i = 0; i < s.length(); i++){
+            // if current char value is less than the next char value
+            // subtract the current char value from the result
             if(map[s[i]] < map[s[i+1]]){
                 ans -= map[s[i]];
             }
