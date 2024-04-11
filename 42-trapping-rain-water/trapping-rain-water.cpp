@@ -12,7 +12,7 @@ public:
                     leftMax = height[left];
                 }
                 left++;
-            } else { // height[right] >= height[left]
+            } else {
                 if (height[right] < rightMax) { // Can contain water
                     ans += rightMax - height[right];
                 } else {
