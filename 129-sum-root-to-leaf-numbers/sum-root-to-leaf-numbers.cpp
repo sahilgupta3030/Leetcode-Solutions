@@ -1,25 +1,23 @@
 class Solution {
-private:
-    int sum = 0;
-
 public:
-    int sumNumbers(TreeNode* root) {
-        if (root == nullptr)
-            return 0;
-        getNumber(root, 0);
-        return this->sum;
+
+    int sumRec(TreeNode* root, int last)
+    {
+        if(root->left==NULL && root->right==NULL)
+            return root->val + last;
+        int res = 0;
+        if(root->left)
+        {
+            res += sumRec(root->left, (root->val+last)*10);
+        }
+        if(root->right)
+        {
+            res += sumRec(root->right, (root->val+last)*10);
+        }
+        return res;
     }
 
-private:
-    void getNumber(TreeNode* node, int num) {
-        int cur = num * 10 + node->val;
-        if (node->left == nullptr && node->right == nullptr) {
-            sum += cur;
-            return;
-        }
-        if (node->left != nullptr)
-            getNumber(node->left, cur);
-        if (node->right != nullptr)
-            getNumber(node->right, cur);
+    int sumNumbers(TreeNode* root) {
+        return sumRec(root, 0);
     }
 };
