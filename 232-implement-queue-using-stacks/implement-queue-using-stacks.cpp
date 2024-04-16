@@ -4,12 +4,9 @@ private:
     stack<int> output;
 
 public:
-    MyQueue() {
-    }
+    MyQueue() {}
 
-    void push(int x) {
-        input.push(x);
-    }
+    void push(int x) { input.push(x); }
 
     int pop() {
         if (output.empty()) {
@@ -33,7 +30,5 @@ public:
         return output.top();
     }
 
-    bool empty() {
-        return input.empty() && output.empty();
-    }
+    bool empty() { return input.empty() && output.empty(); }
 };
