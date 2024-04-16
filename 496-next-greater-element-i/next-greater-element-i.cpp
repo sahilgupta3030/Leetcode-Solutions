@@ -1,26 +1,30 @@
 class Solution {
 public:
-    
     vector<int> nextGreaterElement(vector<int>& nums1, vector<int>& nums2) {
-        stack<int> stk; // Stack to track elements in nums2
-        unordered_map<int, int> map1; // Map to store next greater element 
 
-        // Traverse nums2 to find next greater element 
-        for (int& v : nums2) {
-            // if curr element is greater than top of stack
-            while (!stk.empty() && stk.top() < v) { 
-                map1[stk.top()] = v; // Store next greater element in map1
-                stk.pop(); // Pop element from stack
+        unordered_map<int, int> mp;
+        int n = nums1.size();
+        vector<int> res(n);
+        stack<int> st;
+
+        // Traverse nums2
+        for (int i = 0; i < nums2.size(); i++) {
+            // Find next greater element for current element in nums2
+            while (st.size() && st.top() < nums2[i]) {
+                mp[st.top()] = nums2[i];
+                st.pop();
             }
-            stk.push(v); // Push current element to stack
+            st.push(nums2[i]);
         }
-        
-        vector<int> ans;
-        // Traverse nums1 and find next greater element using map1
-        // Push next greater element or -1 if not found
-        for (int& v : nums1)
-            ans.push_back(map1.count(v) ? map1[v] : -1); 
-        
-        return ans;
+
+        // Populate result vector with next greater elements
+        for (int i = 0; i < n; i++) {
+            if (mp[nums1[i]] == 0) {
+                res[i] = -1; // No next greater element found
+            } else {
+                res[i] = mp[nums1[i]]; // Set the next greater element found
+            }
+        }
+        return res;
     }
 };
