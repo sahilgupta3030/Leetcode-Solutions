@@ -1,34 +1,22 @@
 class Solution {
 public:
-    TreeNode* add(TreeNode* root, int val, int depth, int curr) {
-        if (!root)
-            return NULL;
+    TreeNode* addOneRow(TreeNode* root, int v, int d) {
+        // exit case: empty tree
+        if (!root) return root;
 
-        if (curr == depth - 1) {
-            TreeNode* lTemp = root->left;
-            TreeNode* rTemp = root->right;
-
-            root->left = new TreeNode(val);
-            root->right = new TreeNode(val);
-            root->left->left = lTemp;
-            root->right->right = rTemp;
-
+        // edge case: d == 1
+        if (d == 1) return new TreeNode(v, root, NULL);
+        
+        // right depth reached!
+        if (d == 2) {
+            root->left = new TreeNode(v, root->left, NULL);
+            root->right = new TreeNode(v, NULL, root->right);
+            // stopping the recursion
             return root;
         }
-
-        root->left = add(root->left, val, depth, curr + 1);
-        root->right = add(root->right, val, depth, curr + 1);
-
+        // recursive calls
+        addOneRow(root->left, v, d - 1);
+        addOneRow(root->right, v, d - 1);
         return root;
-    }
-
-    TreeNode* addOneRow(TreeNode* root, int val, int depth) {
-        if (depth == 1) {
-            TreeNode* newRoot = new TreeNode(val);
-            newRoot->left = root;
-            return newRoot;
-        }
-        
-        return add(root, val, depth, 1);
     }
 };
