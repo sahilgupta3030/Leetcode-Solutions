@@ -1,18 +1,21 @@
 class Solution {
-public:
-    string longestCommonPrefix(vector<string>& strs) {
-        if (strs.empty()) return "";
+ public:
+  string longestCommonPrefix(vector<string>& strs) {
+    // If the input vector is empty, there's no common prefix
+    if (strs.empty())
+      return "";
 
-        string prefix = strs[0];
-
-        for (int i = 1; i < strs.size(); ++i) {
-            int j = 0;
-            while (j < prefix.size() && j < strs[i].size() && prefix[j] == strs[i][j]) {
-                ++j;
-            }
-            prefix = prefix.substr(0, j);
-            if (prefix.empty()) break;
-        }
-        return prefix;
+    // Loop through characters in the first string
+    for (int i = 0; i < strs[0].length(); ++i) {
+      // Loop through other strings in vector
+      for (int j = 1; j < strs.size(); ++j) {
+        // If end of string or different char, return common prefix
+        if (i == strs[j].length() || strs[j][i] != strs[0][i])
+          return strs[0].substr(0, i);
+      }
     }
+
+    // If no prefix found, return the first string
+    return strs[0];
+  }
 };
