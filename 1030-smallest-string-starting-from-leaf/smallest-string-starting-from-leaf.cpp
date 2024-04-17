@@ -1,33 +1,27 @@
 class Solution {
 public:
-    string smallestLeafString = "";
-
     string smallestFromLeaf(TreeNode* root) {
-        string path = "";          // Initialize path during DFS
-        dfs(root, path);           // Depth-first search traversal
-        return smallestLeafString; // Return smallest leaf string
+        string result = "";    // Initialize result string
+        dfs(root, "", result); // Start depth-first search (DFS) traversal
+        return result;         // Return the smallest leaf string found
     }
 
-    void dfs(TreeNode* node, string& path) {
-        if (!node)
+    void dfs(TreeNode* node, string current, string& result) {
+        if (!node) {
             return; // Base case: null node
-
-        path += 'a' + node->val; // Add node value to path
-
-        if (!node->left && !node->right) { // Leaf node check
-            string pathReversed = path;    // Copy path
-            reverse(pathReversed.begin(),
-                    pathReversed.end()); // Reverse for leaf string
-            if (smallestLeafString.empty() ||
-                pathReversed < smallestLeafString) {
-                // Update smallest leaf string if necessary
-                smallestLeafString = pathReversed;
-            }
         }
 
-        dfs(node->left, path);  // Recurse left
-        dfs(node->right, path); // Recurse right
+        // Add current node's value to the beginning of the current string
+        current = char('a' + node->val) + current;
 
-        path.pop_back(); // Backtrack
+        // If it's a leaf node
+        if (!node->left && !node->right) {
+            // Update result if current leaf string is smaller
+            if (result.empty() || current < result) {
+                result = current;
+            }
+        }
+        dfs(node->left, current, result);  // Recurse left
+        dfs(node->right, current, result); // Recurse right
     }
 };
