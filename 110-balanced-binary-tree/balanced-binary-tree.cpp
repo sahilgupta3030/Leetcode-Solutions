@@ -1,35 +1,27 @@
 class Solution {
 public:
-    // calculate the height of the tree
-    int height(TreeNode* root) {
-        if (root == NULL)
-            return 0;
-        else
-            return max(height(root->left), height(root->right)) + 1;
-    }
-
-    // function to perform inorder traversal and check balance
-    void inorderUtil(TreeNode* root, bool& ans) {
-        if (root != NULL) {
-            inorderUtil(root->left, ans); // Traverse left subtree
-
-            // Calculate heights of left and right subtrees
-            int lh = height(root->left);
-            int rh = height(root->right);
-
-            // if diff in heights more than 1..
-            // then mark tree as unbalanced
-            if (abs(lh - rh) > 1)
-                ans = ans && false;
-
-            inorderUtil(root->right, ans); // Traverse right subtree
-        }
-    }
-
-    // Main function
+    // Check if tree is balanced
     bool isBalanced(TreeNode* root) {
-        bool ans = true;        // Initialize answer as true
-        inorderUtil(root, ans); // Call utility function to check balance
-        return ans;             // Return the final answer
+        // Return true if height is not -1
+        return getHeight(root) != -1;
+    }
+
+    // Get height of tree
+    int getHeight(TreeNode* root) {
+        // Return 0 if NULL
+        if (!root) return 0;
+
+        // Get heights of subtrees
+        int left_height = getHeight(root->left);
+        int right_height = getHeight(root->right);
+
+        // Return -1 if unbalanced
+        if (left_height == -1 || right_height == -1) return -1;
+
+        // Check balance condition
+        if (abs(left_height - right_height) > 1) return -1;
+
+        // Return max height + 1
+        return max(left_height, right_height) + 1;
     }
 };
