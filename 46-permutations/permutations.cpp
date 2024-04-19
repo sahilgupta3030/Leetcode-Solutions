@@ -9,21 +9,22 @@ public:
     }
 
 private:
+
     void backtrack(vector<vector<int>>& res, vector<int>& nums,
                    vector<int>& curr, vector<bool>& visited) {
-        if (curr.size() == nums.size()) {
-            res.push_back(curr);
-            return;
+        if (curr.size() == nums.size()) { 
+            res.push_back(curr);          
+            return;                       
         }
 
-        for (int i = 0; i < nums.size(); ++i) {
+        for (int i = 0; i < nums.size(); ++i) { 
             if (visited[i])
-                continue;
-            curr.push_back(nums[i]);
-            visited[i] = true;
-            backtrack(res, nums, curr, visited);
-            curr.pop_back();
-            visited[i] = false;
+                continue;                        // Skip visited
+            curr.push_back(nums[i]);             // Add to current
+            visited[i] = true;                   // Mark visited
+            backtrack(res, nums, curr, visited); // Recursive call
+            curr.pop_back();                     // Backtrack
+            visited[i] = false;                  // Mark unvisited
         }
     }
 };
