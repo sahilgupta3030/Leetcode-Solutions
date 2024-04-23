@@ -1,37 +1,50 @@
 class Solution {
 public:
-    vector<int> findMinHeightTrees(int numNodes, vector<vector<int>>& edges) {
-        if (numNodes == 1) return {0};
-        vector<vector<int>> adjacencyList(numNodes);
-        vector<int> degrees(numNodes, 0);
-        for (const auto& edge : edges) {
-            int nodeA = edge[0], nodeB = edge[1];
-            adjacencyList[nodeA].push_back(nodeB);
-            adjacencyList[nodeB].push_back(nodeA);
-            degrees[nodeA]++;
-            degrees[nodeB]++;
+    vector<int> findMinHeightTrees(int n, vector<vector<int>>& edges) {
+        if (n == 1)
+            return {0}; // If only one node, it's the root
+
+        vector<vector<int>> adj(n); // Adjacency list
+        vector<int> degree(n);      // Degrees of nodes
+
+        // Build adjacency list and calculate degrees
+        for (vector<int>& edge : edges) {
+            int from = edge[0], to = edge[1];
+            adj[from].push_back(to);
+            adj[to].push_back(from);
+            degree[from]++;
+            degree[to]++;
         }
-        queue<int> processingQueue;
-        for (int i = 0; i < numNodes; ++i) {
-            if (degrees[i] == 1) {
-                processingQueue.push(i);
-            }
-        }
-        vector<int> minHeightRoots;
-        while (!processingQueue.empty()) {
-            minHeightRoots.clear();
-            int levelSize = processingQueue.size(); 
-            for (int i = 0; i < levelSize; ++i) {
-                int currentNode = processingQueue.front();
-                processingQueue.pop();
-                minHeightRoots.push_back(currentNode);
-                for (int adjacentNode : adjacencyList[currentNode]) {
-                    if (--degrees[adjacentNode] == 1) { 
-                        processingQueue.push(adjacentNode);
-                    }
+
+        queue<int> q; // Leaf nodes queue
+        for (int i = 0; i < n; i++)
+            if (degree[i] == 1)
+                q.push(i);
+
+        // Remove leaf nodes layer by layer until remaining nodes are root nodes
+        while (!q.empty()) {
+            int size = q.size();
+            if (size == n)
+                break; // If all nodes are processed, stop
+            for (int i = 0; i < size; i++) {
+                int cur = q.front();
+                q.pop();
+                n--; // Remove current node from graph
+                for (int next : adj[cur]) {
+                    if (--degree[next] == 1)
+                        q.push(next);
+                    // Decrease degree of neighbors and add leaf nodes to queue
                 }
             }
         }
-        return minHeightRoots;
+
+        // Remaining nodes in queue are root nodes of minimum height trees
+        vector<int> res;
+        while (!q.empty()) {
+            res.push_back(q.front());
+            q.pop();
+        }
+
+        return res;
     }
 };
