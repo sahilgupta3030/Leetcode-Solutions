@@ -1,36 +1,33 @@
+// Define a class Solution
 class Solution {
 public:
+    // Define a function longestIdealString with parameters s and k
     int longestIdealString(string s, int k) {
-        int stringLength = s.size(); // The length of the input string
-        int longestLength = 1; // Initialize the longest length with 1, as the minimum ideal string length is 1
-        vector<int> dp(stringLength, 1); // Dynamic programming table with a base case of 1 for each character
-        unordered_map<char, int> lastOccurrence; // Stores the last occurrence index of each character encountered
 
-        // Initialize the last occurrence for the first character in the string
-        lastOccurrence[s[0]] = 0;
+        // Initialize a vector dp of size 26 with 0s
+        vector<int> dp(26,0);
+        // Initialize ans as 1
+        int ans=1;
 
-        // Iterate over the string starting from the second character
-        for (int i = 1; i < stringLength; ++i) {
-            char currentChar = s[i]; // Current character being processed
+        // Iterate through the characters of string s
+        for(int i=0;i<s.size();i++){
 
-            // Try extending the ideal string including all characters within 'k' distance of current character
-            for (char otherChar = 'a'; otherChar <= 'z'; ++otherChar) {
-                // If the other character is more than 'k' distance away, skip it
-                if (abs(currentChar - otherChar) > k) continue;
+            // Calculate the range of characters to consider
+            int x=max(0,s[i]-'a'-k);
+            int y=min(25,s[i]-'a'+k);
+            // Initialize temp as 1
+            int temp=1;
 
-                // Check if we have seen the other character before and extend the ideal string length if possible
-                if (lastOccurrence.count(otherChar))
-                    dp[i] = max(dp[i], dp[lastOccurrence[otherChar]] + 1);
+            // Iterate through the range of characters
+            for(int j=x;j<=y;j++){
+                // Update temp with the maximum of its current value and 1 plus dp[j]
+                temp=max(temp,1+dp[j]);
             }
-
-            // Update the last occurrence index for the current character
-            lastOccurrence[currentChar] = i;
-
-            // Update the longest length found so far
-            longestLength = max(longestLength, dp[i]);
+            // Update dp[s[i]-'a'] with temp
+            dp[s[i]-'a']=temp;
+            // Update ans with the maximum of its current value and temp
+            ans=max(ans,temp);
         }
-
-        // Return the length of the longest ideal string found
-        return longestLength;
+        return ans;
     }
 };
