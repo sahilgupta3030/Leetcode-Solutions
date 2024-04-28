@@ -1,43 +1,49 @@
 class Solution {
- public:
-  vector<int> sumOfDistancesInTree(int n, vector<vector<int>>& edges) {
-    vector<int> ans(n);
-    vector<int> count(n, 1);
-    vector<unordered_set<int>> tree(n);
+public:
 
-    for (const vector<int>& edge : edges) {
-      const int u = edge[0];
-      const int v = edge[1];
-      tree[u].insert(v);
-      tree[v].insert(u);
+    void postOrderTraversal(int root, int parent, vector<int>&count, vector<int>&res, vector<int>adj[]) {
+
+        for (int i=0;i<adj[root].size();i++) {
+            int nb = adj[root][i];
+
+            if (nb == parent) continue;
+            postOrderTraversal(nb, root, count, res, adj);
+            count[root]+=count[nb];
+            res[root]+=count[nb]+res[nb];
+        }
+        count[root]++;
     }
 
-    postorder(tree, 0, -1, count, ans);
-    preorder(tree, 0, -1, count, ans);
-    return ans;
-  }
+    void preOrderTraversal(int root, int parent, vector<int>&count, vector<int>&res, 
+        vector<int>adj[], int n) {
+        for (int i=0;i<adj[root].size();i++) {
+            int nb = adj[root][i];
 
- private:
-  void postorder(const vector<unordered_set<int>>& tree, int node, int parent,
-                 vector<int>& count, vector<int>& ans) {
-    for (const int child : tree[node]) {
-      if (child == parent)
-        continue;
-      postorder(tree, child, node, count, ans);
-      count[node] += count[child];
-      ans[node] += ans[child] + count[child];
-    }
-  }
+            if (parent == nb) continue;
 
-  void preorder(const vector<unordered_set<int>>& tree, int node, int parent,
-                vector<int>& count, vector<int>& ans) {
-    for (const int child : tree[node]) {
-      if (child == parent)
-        continue;
-      // count[child] nodes are 1 step closer from child than parent.
-      // (n - count[child]) nodes are 1 step farther from child than parent.
-      ans[child] = ans[node] - count[child] + (tree.size() - count[child]);
-      preorder(tree, child, node, count, ans);
+            res[nb] = res[root]- count[nb] + n-count[nb];
+            preOrderTraversal(nb, root, count,res, adj, n);
+        }
+
     }
-  }
+    vector<int> sumOfDistancesInTree(int n, vector<vector<int>>& edges) {
+        
+        vector<int>adj[n];
+
+        for (int i=0;i<edges.size();i++) {
+            int a =edges[i][0];
+            int b = edges[i][1];
+            adj[a].push_back(b);
+            adj[b].push_back(a);
+        }
+
+        vector<int>count(n,0);
+        vector<int>res(n,0);
+
+        postOrderTraversal(0,-1, count, res, adj);
+        preOrderTraversal(0,-1,count,res,adj,n);
+
+        return res;
+
+    }
 };
