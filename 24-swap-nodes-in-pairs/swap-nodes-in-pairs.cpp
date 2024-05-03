@@ -1,12 +1,20 @@
 class Solution {
  public:
   ListNode* swapPairs(ListNode* head) {
-    if (!head || !head->next) // Base case: if head or head->next is nullptr
+    // Base case: if head is nullptr or there is only one node
+    if (!head || !head->next)
       return head;
 
-    ListNode* newHead = head->next; // New head after swapping
-    head->next = swapPairs(head->next->next); // Recur for remaining list
-    newHead->next = head; // Swap current node with its next
+    // Save the newHead after swapping
+    ListNode* newHead = head->next;
+
+    // Recursively swap pairs of nodes starting from the third node
+    head->next = swapPairs(head->next->next);
+
+    // Swap the current node with its next node
+    newHead->next = head;
+
+    // Return the new head of the swapped list
     return newHead;
   }
 };
