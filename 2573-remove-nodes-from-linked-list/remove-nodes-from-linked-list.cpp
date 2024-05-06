@@ -1,23 +1,62 @@
-// using Recursion..
+// reverse the Linkedlist itself..
 class Solution {
-public:
-    ListNode* removeNodes(ListNode* head) {
+private:
+    ListNode* reverseList(ListNode* head) {
         if (head == NULL || head->next == NULL) {
             return head;
         }
+        ListNode* last = reverseList(head->next);
+        head->next->next = head;
+        head->next = NULL;
 
-        ListNode* nextNode = removeNodes(head->next);
+        return last;
+    }
 
-        if (head->val < nextNode->val) {
-            delete head;
-            return nextNode;
+public:
+    ListNode* removeNodes(ListNode* head) {
+        head = reverseList(head);
+
+        int maximum = 0;
+        ListNode* prev = NULL;
+        ListNode* current = head;
+
+        while (current != NULL) {
+            maximum = max(maximum, current->val);
+
+            if (current->val < maximum) {
+                prev->next = current->next;
+                ListNode* deleted = current;
+                current = current->next;
+                delete (deleted);
+            } else {
+                prev = current;
+                current = current->next;
+            }
         }
 
-        head->next = nextNode;
-        return head;
+        return reverseList(head);
     }
 };
 
+// // using Recursion..
+// class Solution {
+// public:
+//     ListNode* removeNodes(ListNode* head) {
+//         if (head == NULL || head->next == NULL) {
+//             return head;
+//         }
+
+//         ListNode* nextNode = removeNodes(head->next);
+
+//         if (head->val < nextNode->val) {
+//             delete head;
+//             return nextNode;
+//         }
+
+//         head->next = nextNode;
+//         return head;
+//     }
+// };
 
 // // using stack..
 // class Solution {
@@ -52,5 +91,3 @@ public:
 //         return resultHead;
 //     }
 // };
-
-
