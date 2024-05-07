@@ -1,4 +1,5 @@
-// Approach-4 (Using one pointer left to right traversal)
+// Approach-3 (Using one pointer left to right traversal)
+// TC: O(n)  SC: O(1)
 class Solution {
 public:
     ListNode* doubleIt(ListNode* head) {        
@@ -19,6 +20,7 @@ public:
         return head;
     }
 };
+
 
 // // Approach-2 (Using Recursion)
 // class Solution {
