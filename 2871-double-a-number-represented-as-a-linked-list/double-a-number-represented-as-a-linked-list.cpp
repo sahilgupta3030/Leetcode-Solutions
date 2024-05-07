@@ -1,27 +1,49 @@
-// Approach-2 (Using Recursion)
+// Approach-4 (Using one pointer left to right traversal)
 class Solution {
-public:    
-    int recursive_double(ListNode* head) {
-        if(head == NULL)
-            return 0;      
-
-        int carry  = recursive_double(head->next);
-        int newVal = (head->val)*2 + carry;
-        head->val = newVal % 10;    
-        return newVal / 10;        
-    }
-    
+public:
     ListNode* doubleIt(ListNode* head) {        
-        int lastCarry = recursive_double(head);
-        
-        if(lastCarry > 0) {
-            ListNode* newHead = new ListNode(lastCarry);
+        if(head->val >= 5) {
+            ListNode* newHead = new ListNode(0);
             newHead->next = head;
-            return newHead;
-        }        
-        return head;        
+            head = newHead;
+        }       
+        
+        ListNode* curr = head;        
+        while(curr != NULL) {            
+            curr->val = (curr->val * 2)%10;           
+            if(curr->next != NULL && curr->next->val >= 5) {
+                curr->val += 1;
+            }            
+            curr = curr->next;            
+        }       
+        return head;
     }
 };
+
+// // Approach-2 (Using Recursion)
+// class Solution {
+// public:    
+//     int recursive_double(ListNode* head) {
+//         if(head == NULL)
+//             return 0;      
+
+//         int carry  = recursive_double(head->next);
+//         int newVal = (head->val)*2 + carry;
+//         head->val = newVal % 10;    
+//         return newVal / 10;        
+//     }
+    
+//     ListNode* doubleIt(ListNode* head) {        
+//         int lastCarry = recursive_double(head);
+        
+//         if(lastCarry > 0) {
+//             ListNode* newHead = new ListNode(lastCarry);
+//             newHead->next = head;
+//             return newHead;
+//         }        
+//         return head;        
+//     }
+// };
 
 
 
