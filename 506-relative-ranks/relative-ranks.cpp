@@ -1,26 +1,26 @@
 class Solution {
 public:
-    vector<string> findRelativeRanks(vector<int>& scores) {
-        int numOfScores = scores.size();
-        vector<pair<int, int>> indexedScores;
-        for (int i = 0; i < numOfScores; ++i) {
-            indexedScores.push_back(make_pair(scores[i], i));
-        }
-        sort(indexedScores.begin(), indexedScores.end(), comparePairs);
+    vector<string> findRelativeRanks(vector<int>& score) {
+        vector<pair<int,int>> indices;
+        int n = score.size();
 
-        vector<string> ranks(numOfScores);
-        vector<string> medals = {"Gold Medal", "Silver Medal", "Bronze Medal"};
-        for (int i = 0; i < numOfScores; ++i) {
-            if (i < 3) {
-                ranks[indexedScores[i].second] = medals[i];
+        for(int i = 0; i < n; i++) {
+            indices.push_back({score[i], i});
+        }
+        sort(indices.rbegin(), indices.rend());
+
+        vector<string> result(n);
+        for(int i = 0; i < n; i++) {
+            if(i == 0) {
+                result[indices[i].second] = "Gold Medal";
+            } else if(i == 1) {
+                result[indices[i].second] = "Silver Medal";
+            } else if(i == 2) {
+                result[indices[i].second] = "Bronze Medal";
             } else {
-                ranks[indexedScores[i].second] = to_string(i + 1);
+                result[indices[i].second] = to_string(i + 1);
             }
         }
-        return ranks;
-    }
-
-    static bool comparePairs(const pair<int, int>& a, const pair<int, int>& b) {
-        return a.first > b.first;
+        return result;
     }
 };
