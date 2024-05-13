@@ -1,4 +1,4 @@
-// for dp
+// for memoization even before computation begins.
 vector<int> dp(101, -1);
 
 class Solution {
@@ -27,6 +27,7 @@ public:
     int numDecodings(string s) {
         n = s.size();
 
+        // to avoid erorrs during computation
         fill(dp.begin(), dp.end(), -1);
         return numDecodingsHelper(s, 0);
     }
