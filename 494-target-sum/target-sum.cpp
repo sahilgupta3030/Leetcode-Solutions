@@ -1,7 +1,7 @@
 class Solution {
 public:
     int countSubset(vector<int>& nums, int n, int sum,
-                    vector<vector<int>>& dp) {
+    vector<vector<int>>& dp) {
         if (dp[n][sum] != -1)
             return dp[n][sum];
         if (n == 0 and sum > 0)
