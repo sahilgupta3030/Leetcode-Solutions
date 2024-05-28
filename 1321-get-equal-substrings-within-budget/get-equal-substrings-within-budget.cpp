@@ -1,13 +1,20 @@
 class Solution {
 public:
     int equalSubstring(string s, string t, int maxCost) {
-        int j = 0;
-        for (int i = 0; i < s.length(); ++i) {
-            maxCost -= abs(s[i] - t[i]);
-            if (maxCost < 0)
-                maxCost += abs(s[j] - t[j++]);
+        int n = s.length();
+        int maxLen = 0;
+        int currCost = 0;
+
+        int i = 0, j = 0;
+        while (j < n) {
+            currCost += abs(s[j] - t[j]);
+            while (currCost > maxCost) {
+                currCost -= abs(s[i] - t[i]);
+                i++;
+            }
+            maxLen = max(maxLen, j - i + 1);
+            j++;
         }
-        return s.length() - j;
+        return maxLen;
     }
 };
-
