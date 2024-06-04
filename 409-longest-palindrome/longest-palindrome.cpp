@@ -1,17 +1,37 @@
 class Solution {
 public:
     int longestPalindrome(string s) {
-        int ans = 0;
-        vector<int> count(128);
+        vector<int>lower(26,0);
+        vector<int>upper(26,0);
+        for(int i=0;i<s.size();i++){
+            if(s[i]>='a'){
+                lower[s[i]-'a']++;
+            }
+            else{
+                upper[s[i]-'A']++;
+            }
 
-        for (const char c : s)
-            ++count[c];
+        }
+        int c=0;
+        int f=0;
+        for(int i=0;i<26;i++){
+            if(lower[i]%2==0){
+                c += lower[i];
+            }
+            else{
+                c += lower[i]-1;
+                f=1;
+            }
+            if(upper[i]%2==0){
+                c += upper[i];
+            }
+            else{
+                c += upper[i]-1;
+                f=1;
+            }
 
-        for (const int freq : count)
-            ans += freq % 2 == 0 ? freq : freq - 1;
-
-        const bool hasOddCount =
-            ranges::any_of(count, [](int c) { return c & 1; });
-        return ans + hasOddCount;
+        }
+        return c+f;
+        
     }
 };
