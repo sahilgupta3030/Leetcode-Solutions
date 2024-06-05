@@ -1,21 +1,39 @@
 class Solution {
 public:
-    vector<string> commonChars(vector<string>& A){
-    vector<int> common(26,INT_MAX);
-    vector<string> res;
-
-    for (auto s : A){
-        vector<int> cnt(26, 0);
-        for (auto c : s)
-            cnt[c - 'a']++;
-        for (auto i = 0; i < 26; i++)
-            common[i] = min(common[i], cnt[i]);
+    void fillCountArray(string& word, int count[26]) {
+        for (char& ch : word) {
+            count[ch - 'a']++;
+        }
     }
+    vector<string> commonChars(vector<string>& words) {
+        vector<string> result;
 
-    for (auto i = 0; i < 26; i++)
-        for (auto j = 0; j < common[i]; j++)
-            res.push_back(string(1, i + 'a'));
-        
-    return res;
-}
+        int n = words.size();
+
+        int count[26] = {0};
+
+        fillCountArray(words[0], count);
+
+        for (int i = 1; i < n; i++) {
+            int temp[26] = {0};
+
+            fillCountArray(words[i], temp);
+
+            for (int i = 0; i < 26; i++) {
+                if (count[i] != temp[i])
+                    count[i] = min(count[i], temp[i]);
+            }
+        }
+
+        for (int i = 0; i < 26; i++) {
+            if (count[i] != 0) {
+                int c = count[i];
+                while (c--) {
+                    result.push_back(string(1, i + 'a'));
+                }
+            }
+        }
+
+        return result;
+    }
 };
