@@ -10,12 +10,18 @@ public:
         for (int i = 0; i < n; i++) {
             sum += nums[i];
             int rem = sum % k;
+
+            // Adjust negative remainder
             if (rem < 0) {
                 rem += k;
             }
+            
+            // Check if remainder exists in map
             if (mp.find(rem) != mp.end()) {
-                result += mp[rem];
+                result += mp[rem]; // Update result count
             }
+
+            // Increment remainder count in map
             mp[rem]++;
         }
         return result;
