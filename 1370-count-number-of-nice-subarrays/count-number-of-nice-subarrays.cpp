@@ -1,6 +1,6 @@
 class Solution {
 public:
-    int numberOfSubarrays(std::vector<int>& nums, int k) {
+    int numberOfSubarrays(vector<int>& nums, int k) {
         int size = nums.size();
         vector<int> count(size + 1, 0); 
         count[0] = 1; 
