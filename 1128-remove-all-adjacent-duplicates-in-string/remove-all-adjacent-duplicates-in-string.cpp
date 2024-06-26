@@ -8,9 +8,9 @@ public:
         while (i < n) {
             // if stack is empty or the top element !=  to current char
             if (st.empty() || st.top() != s[i]) {
-                // if top of stack is equal to current char, pop it
                 st.push(s[i]);
             } else {
+                // if top of stack is equal to current char, pop it
                 st.pop();
             }
             i++;
