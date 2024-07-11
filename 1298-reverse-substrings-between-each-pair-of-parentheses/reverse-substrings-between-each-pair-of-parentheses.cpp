@@ -1,7 +1,7 @@
 class Solution {
 public:
     string reverseParentheses(string s) {
-        stack<int> openeBracket; //You can use a vector also as stack
+        stack<int> openeBracket; 
         string result;
         for (char currentChar : s) {
             if (currentChar == '(') {
