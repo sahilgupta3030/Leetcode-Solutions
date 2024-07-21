@@ -9,24 +9,19 @@ public:
     void push(int x) { input.push(x); }
 
     int pop() {
-        if (output.empty()) {
-            while (!input.empty()) {
-                output.push(input.top());
-                input.pop();
-            }
-        }
-        int value = output.top();
+        int val = peek();
         output.pop();
-        return value;
+        return val;
     }
 
     int peek() {
         if (output.empty()) {
-            while (!input.empty()) {
+            while (input.empty() != true) {
                 output.push(input.top());
                 input.pop();
             }
         }
+
         return output.top();
     }
 
