@@ -20,7 +20,7 @@ public:
 
     int trap(vector<int>& height) {
         int n = height.size();
-        if (n == 1 || n == 0)
+        if (n == 1 || n == 0 || n == 2)
             return 0;
             
         vector<int> leftMax = getLeftMax(height, n);
