@@ -4,13 +4,13 @@ public:
         vector<int> ans;
         vector<tuple<int, int, int>> A;
 
-        for (int i = 0; i < nums.size(); ++i){
+        for (int i = 0; i < nums.size(); ++i) {
             A.emplace_back(getMapped(nums[i], mapping), i, nums[i]);
         }
 
         sort(A.begin(), A.end());
 
-        for (const auto& [_, i, num] : A){
+        for (const auto& [_, i, num] : A) {
             ans.push_back(num);
         }
 
@@ -20,7 +20,7 @@ public:
 private:
     int getMapped(int num, const vector<int>& mapping) {
         string mapped;
-        for (const char character : to_string(num)){
+        for (const char character : to_string(num)) {
             mapped += to_string(mapping[character - '0']);
         }
         return stoi(mapped);
