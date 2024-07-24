@@ -7,7 +7,8 @@ public:
         for (int i = 0; i < nums.size(); ++i)
             A.emplace_back(getMapped(nums[i], mapping), i, nums[i]);
 
-        ranges::sort(A);
+        // ranges::sort(A);
+        sort(A.begin(), A.end());
 
         for (const auto& [_, i, num] : A)
             ans.push_back(num);
