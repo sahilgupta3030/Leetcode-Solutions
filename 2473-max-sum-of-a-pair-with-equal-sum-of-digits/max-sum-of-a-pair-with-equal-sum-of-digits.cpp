@@ -1,23 +1,24 @@
 class Solution {
 public:
-    int maximumSum(vector<int>& numbers) {
-        vector<vector<int>> digitSumGroups(100);
-      
-        for (int& number : numbers) {
-            int digitSum = 0;
-            for (int value = number; value > 0; value /= 10) {
-                digitSum += value % 10;
+    int maximumSum(vector<int>& nums) {
+        int max[82] = {0}; // Store max number for each digit sum (0-81)
+        int ans = -1;
+
+        for (int x : nums) {
+            int sum = 0, temp = x;
+
+            // calculate digit sum...
+            while (temp != 0) {
+                sum += temp % 10;
+                temp /= 10;
             }
-            digitSumGroups[digitSum].emplace_back(number);
+            // Update max pair sum
+            if (max[sum] != 0)
+                ans = std::max(ans, x + max[sum]);
+
+            // Update max number for sum
+            max[sum] = std::max(max[sum], x);
         }
-      
-        int maxPairSum = -1;
-        for (auto& group : digitSumGroups) {
-            if (group.size() > 1) {
-                sort(group.rbegin(), group.rend());
-                maxPairSum = max(maxPairSum, group[0] + group[1]);
-            }
-        }
-        return maxPairSum;
+        return ans;
     }
 };
