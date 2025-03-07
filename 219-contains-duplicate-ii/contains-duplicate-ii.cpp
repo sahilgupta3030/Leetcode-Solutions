@@ -1,22 +1,22 @@
 class Solution {
 public:
     bool containsNearbyDuplicate(vector<int>& nums, int k) {
-        int n = nums.size();
-        unordered_set<int> st;
-        int i = 0, j = 0;
+        unordered_set<int> seen;
 
-        while (j < n) {
-            if (abs(i - j) > k) {
-                st.erase(nums[i]);
-                i++;
-            }
-
-            if (st.find(nums[j]) != st.end()) {
+        int left = 0;
+        for (int right = 0; right < nums.size(); right++) {
+            if (seen.find(nums[right]) != seen.end()) {
                 return true;
             }
-            st.insert(nums[j]);
-            j++;
+            seen.insert(nums[right]);
+
+            // shrink window when size exceeds k
+            if (right - left >= k) {
+                seen.erase(nums[left]);
+                left++; 
+            }
         }
+
         return false;
     }
 };
